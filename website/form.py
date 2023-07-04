@@ -1,7 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Record
 
+#Create signup form(register)
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email'}))
     first_name = forms.CharField(label="",max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
@@ -30,3 +32,19 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+
+
+#Create add record form
+class AddRecordForm(forms.ModelForm):
+    first_name = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"First Name","class":"form-control"}))
+    last_name = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}))
+    email = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}))
+    phone = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}))
+    address = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}))
+    city = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}))
+    state = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}))
+    zipcode = forms.CharField(required=True,label="", widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}))
+
+    class Meta:
+        model = Record
+        exclude = ("user",)
